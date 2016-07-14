@@ -7,20 +7,10 @@
 //
 
 #import "ViewController.h"
+#import "ResponseObject.h"
 
 @interface ViewController ()
 
-@end
-
-@interface ResponseObject : NSObject
-
-@property (nonatomic, assign ) short cmd;
-@property (nonatomic, assign ) NSString* response;
-
-@end
-
-@implementation ResponseObject
-@synthesize cmd, response;
 @end
 
 @implementation ViewController
@@ -29,11 +19,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.infoLabel.numberOfLines = 0;
 
     _socket = [AsyncSocket shareInstance];
     [_socket setPackageMaxSize:10000];
     [_socket setStatusDelegate:self];
     [_socket addToResponseDelegates:self];
+}
+
+- (IBAction) clearButtonTapped:(id)sender
+{
+    self.infoLabel.text = @"";
 }
 
 - (IBAction) connectButtonTapped:(id)sender
@@ -74,17 +70,17 @@
 #pragma mark UI更新
 - (void) onUIConnectSuccess
 {
-    infoLabel.text = @"连接成功";
+    self.infoLabel.text = @"连接成功";
 }
 
 - (void) onUIConnectFail
 {
-    infoLabel.text = @"连接失败";
+    self.infoLabel.text = @"连接失败";
 }
 
 - (void) onUIDisconnect
 {
-    infoLabel.text = @"断开连接";
+    self.infoLabel.text = @"断开连接";
 }
 
 - (void) onUIReceiveData:(ResponseObject*)responseObject
@@ -92,7 +88,9 @@
     short cmd = responseObject.cmd;
     NSString* response = responseObject.response;
     
-    infoLabel.text = [NSString stringWithFormat:@"cmd为%d, 信息为%@",cmd, response];
+    NSString* oldText = self.infoLabel.text;
+    NSString* info = [NSString stringWithFormat:@"cmd为%d, 信息为%@",cmd, response];
+    self.infoLabel.text = [NSString stringWithFormat:@"%@\r\n%@", oldText, info];
 }
 
 @end

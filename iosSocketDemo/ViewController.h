@@ -16,6 +16,7 @@
 
 @property (nonatomic, strong ) IBOutlet UILabel* infoLabel;
 
+- (IBAction) clearButtonTapped:(id)sender;
 - (IBAction) connectButtonTapped:(id)sender;
 - (IBAction) sendButtonTapped:(id)sender;
 

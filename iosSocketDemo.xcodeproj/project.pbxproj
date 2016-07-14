@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		851D41361D373CB70062B387 /* ResponseObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 851D41351D373CB70062B387 /* ResponseObject.m */; };
 		8539D2F61B9BD18300D14FB7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8539D2F51B9BD18300D14FB7 /* main.m */; };
 		8539D2F91B9BD18300D14FB7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8539D2F81B9BD18300D14FB7 /* AppDelegate.m */; };
 		8539D2FC1B9BD18300D14FB7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8539D2FB1B9BD18300D14FB7 /* ViewController.m */; };
@@ -38,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		851D41341D373CB70062B387 /* ResponseObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponseObject.h; sourceTree = "<group>"; };
+		851D41351D373CB70062B387 /* ResponseObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResponseObject.m; sourceTree = "<group>"; };
 		8539D2F01B9BD18300D14FB7 /* iosSocketDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosSocketDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8539D2F41B9BD18300D14FB7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8539D2F51B9BD18300D14FB7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -122,6 +125,8 @@
 				8539D2F81B9BD18300D14FB7 /* AppDelegate.m */,
 				8539D2FA1B9BD18300D14FB7 /* ViewController.h */,
 				8539D2FB1B9BD18300D14FB7 /* ViewController.m */,
+				851D41341D373CB70062B387 /* ResponseObject.h */,
+				851D41351D373CB70062B387 /* ResponseObject.m */,
 				8539D2FD1B9BD18300D14FB7 /* Main.storyboard */,
 				8539D3001B9BD18300D14FB7 /* Images.xcassets */,
 				8539D3021B9BD18300D14FB7 /* LaunchScreen.xib */,
@@ -357,6 +362,7 @@
 				8539D33C1B9BEB9100D14FB7 /* ReceivedDataStatusQueue.m in Sources */,
 				8564DAF01B9C19B300AEB52D /* ArgObject.m in Sources */,
 				8539D3211B9BD36400D14FB7 /* PackageHeader.m in Sources */,
+				851D41361D373CB70062B387 /* ResponseObject.m in Sources */,
 				8539D3441B9BEFC900D14FB7 /* SendDataQueue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
