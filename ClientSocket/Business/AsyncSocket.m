@@ -11,6 +11,7 @@
 #import "SendDataQueue.h"
 #import "GenCodec.h"
 #import "ArgObject.h"
+#import "DataObject.h"
 
 @interface AsyncSocket(Private)
 - (void) asyncConnect:(ArgObject*)object;
@@ -20,6 +21,8 @@
 static AsyncSocket* _instance = nil;
 
 @implementation AsyncSocket
+
+@synthesize delegate;
 
 + (AsyncSocket*) shareInstance
 {
@@ -39,7 +42,6 @@ static AsyncSocket* _instance = nil;
     if ( self = [super init])
     {
         _socket = [[CClientSocket alloc] init];
-        _responseCallBacks = [NSMutableArray arrayWithCapacity:0];
         [_socket setCallBack:self];
     }
     
@@ -86,46 +88,6 @@ static AsyncSocket* _instance = nil;
     [_socket setPackageMaxSize:packageMaxSize];
 }
 
-- (void) setStatusDelegate:(id<ISocketStatus>)delegate
-{
-    _statusCallBack = delegate;
-}
-
-- (void) resetStatusDelegate:(id<ISocketStatus>)delegate
-{
-    [self removeStatusDelegate:delegate];
-}
-
-- (void) removeStatusDelegate:(id<ISocketStatus>)delegate
-{
-    _statusCallBack = nil;
-}
-
-- (void) addToResponseDelegates:(id<ISocketResponse>)delegate
-{
-    bool isExist = false;
-    
-    for (id<ISocketResponse> _delegate in _responseCallBacks)
-    {
-        if ( _delegate == delegate )
-        {
-            isExist = true;
-            break;
-        }
-    }
-    if ( !isExist) [_responseCallBacks addObject:delegate];
-}
-
-- (void) removeFromResponseDelegates:(id<ISocketResponse>)delegate
-{
-    [_responseCallBacks removeObject:delegate];
-}
-
-- (void) resetResponseDelegates:(id<ISocketResponse>)delegate
-{
-    [_responseCallBacks removeAllObjects];
-}
-
 #pragma mark-
 #pragma mark Private
 - (void) asyncConnect:(ArgObject*)object
@@ -160,7 +122,7 @@ static AsyncSocket* _instance = nil;
     _shouldSendExit = false;
     
     [self startSendLoop];
-    if ( nil != _statusCallBack ) [_statusCallBack onConnectSuccess];
+    [self performSelectorOnMainThread:@selector(onUIConnectSuccess) withObject:nil waitUntilDone:YES];
 }
 
 - (void) onConnectFail
@@ -168,7 +130,7 @@ static AsyncSocket* _instance = nil;
     _isConnected = false;
     
     _shouldSendExit = true;
-    if ( nil != _statusCallBack) [_statusCallBack onConnectFail];
+    [self performSelectorOnMainThread:@selector(onUIConnectFail) withObject:nil waitUntilDone:YES];
 }
 
 - (void) onDisconnect
@@ -177,23 +139,17 @@ static AsyncSocket* _instance = nil;
     _isConnected = false;
     
     _shouldSendExit = true;
-    if ( nil != _statusCallBack) [_statusCallBack onDisconnect];
-    
+    [self performSelectorOnMainThread:@selector(onUIDisconnect) withObject:nil waitUntilDone:YES];
     [[SendDataQueue shareInstance] clear];
 }
 
 - (void) onReceiveData:(NSMutableData*)data length:(int)length
 {
-    DecodeObject* object = [GenCodec decode:data fullDataLen:length];
+    DataObject* dataObject = [[DataObject alloc] init];
+    dataObject.data = [NSMutableData dataWithData:data];
+    dataObject.length = length;
     
-    NSString* response = [[NSString alloc] initWithData:object.dataBytes encoding:NSUTF8StringEncoding];
-    for (id<ISocketResponse> _callBack in _responseCallBacks)
-    {
-        if ( nil != _callBack)
-        {
-            [_callBack onReceiveData:object.cmd response:response];
-        }
-    }
+    [self performSelectorOnMainThread:@selector(onUIReceiveData:) withObject:dataObject waitUntilDone:YES];
 }
 
 - (void) onSendSuccess:(NSMutableData*)data
@@ -205,6 +161,42 @@ static AsyncSocket* _instance = nil;
 {
     [[SendDataQueue shareInstance] removeDataBytes];
     [self disConnect];
+}
+
+#pragma mark UI回调
+- (void) onUIConnectSuccess
+{
+    if ( nil != self.delegate )
+    {
+        [self.delegate onConnectSuccess];
+    }
+}
+
+- (void) onUIConnectFail
+{
+    if ( nil != self.delegate)
+    {
+        [self.delegate onConnectFail];
+    }
+}
+
+- (void) onUIDisconnect
+{
+    if ( nil != self.delegate)
+    {
+        [self.delegate onDisconnect];
+    }
+}
+
+- (void) onUIReceiveData:(DataObject*)dataObject
+{
+    DecodeObject* object = [GenCodec decode:dataObject.data fullDataLen:dataObject.length];
+    NSString* response = [[NSString alloc] initWithData:object.dataBytes encoding:NSUTF8StringEncoding];
+    
+    if ( nil != self.delegate)
+    {
+        [self.delegate onReceiveData:object.cmd response:response];
+    }
 }
 
 @end

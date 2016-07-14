@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		851D41361D373CB70062B387 /* ResponseObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 851D41351D373CB70062B387 /* ResponseObject.m */; };
+		8514F0671D3786FC002AA716 /* DataObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8514F0661D3786FC002AA716 /* DataObject.m */; };
 		8539D2F61B9BD18300D14FB7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8539D2F51B9BD18300D14FB7 /* main.m */; };
 		8539D2F91B9BD18300D14FB7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8539D2F81B9BD18300D14FB7 /* AppDelegate.m */; };
 		8539D2FC1B9BD18300D14FB7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8539D2FB1B9BD18300D14FB7 /* ViewController.m */; };
@@ -39,8 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		851D41341D373CB70062B387 /* ResponseObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponseObject.h; sourceTree = "<group>"; };
-		851D41351D373CB70062B387 /* ResponseObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResponseObject.m; sourceTree = "<group>"; };
+		8514F0651D3786FC002AA716 /* DataObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataObject.h; sourceTree = "<group>"; };
+		8514F0661D3786FC002AA716 /* DataObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataObject.m; sourceTree = "<group>"; };
 		8539D2F01B9BD18300D14FB7 /* iosSocketDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosSocketDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8539D2F41B9BD18300D14FB7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8539D2F51B9BD18300D14FB7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -67,8 +67,7 @@
 		8539D3331B9BDE4400D14FB7 /* BytesConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BytesConverter.m; sourceTree = "<group>"; };
 		8539D3351B9BE8B200D14FB7 /* GenCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenCodec.h; sourceTree = "<group>"; };
 		8539D3361B9BE8B200D14FB7 /* GenCodec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenCodec.m; sourceTree = "<group>"; };
-		8539D3381B9BEB3700D14FB7 /* ISocketStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISocketStatus.h; sourceTree = "<group>"; };
-		8539D3391B9BEB5E00D14FB7 /* ISocketResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISocketResponse.h; sourceTree = "<group>"; };
+		8539D3381B9BEB3700D14FB7 /* ISocketDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISocketDelegate.h; sourceTree = "<group>"; };
 		8539D33A1B9BEB9100D14FB7 /* ReceivedDataStatusQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceivedDataStatusQueue.h; sourceTree = "<group>"; };
 		8539D33B1B9BEB9100D14FB7 /* ReceivedDataStatusQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceivedDataStatusQueue.m; sourceTree = "<group>"; };
 		8539D33F1B9BEC8500D14FB7 /* NSMutableArray+QueueAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+QueueAdditions.h"; sourceTree = "<group>"; };
@@ -125,8 +124,6 @@
 				8539D2F81B9BD18300D14FB7 /* AppDelegate.m */,
 				8539D2FA1B9BD18300D14FB7 /* ViewController.h */,
 				8539D2FB1B9BD18300D14FB7 /* ViewController.m */,
-				851D41341D373CB70062B387 /* ResponseObject.h */,
-				851D41351D373CB70062B387 /* ResponseObject.m */,
 				8539D2FD1B9BD18300D14FB7 /* Main.storyboard */,
 				8539D3001B9BD18300D14FB7 /* Images.xcassets */,
 				8539D3021B9BD18300D14FB7 /* LaunchScreen.xib */,
@@ -175,12 +172,13 @@
 			isa = PBXGroup;
 			children = (
 				8539D31B1B9BD26700D14FB7 /* Queue */,
-				8539D3381B9BEB3700D14FB7 /* ISocketStatus.h */,
-				8539D3391B9BEB5E00D14FB7 /* ISocketResponse.h */,
+				8539D3381B9BEB3700D14FB7 /* ISocketDelegate.h */,
 				8539D3451B9BF2D900D14FB7 /* AsyncSocket.h */,
 				8539D3461B9BF2D900D14FB7 /* AsyncSocket.m */,
 				8564DAEE1B9C19B300AEB52D /* ArgObject.h */,
 				8564DAEF1B9C19B300AEB52D /* ArgObject.m */,
+				8514F0651D3786FC002AA716 /* DataObject.h */,
+				8514F0661D3786FC002AA716 /* DataObject.m */,
 			);
 			path = Business;
 			sourceTree = "<group>";
@@ -357,12 +355,12 @@
 				8539D2F61B9BD18300D14FB7 /* main.m in Sources */,
 				8539D3371B9BE8B200D14FB7 /* GenCodec.m in Sources */,
 				8539D3411B9BEC8500D14FB7 /* NSMutableArray+QueueAdditions.m in Sources */,
+				8514F0671D3786FC002AA716 /* DataObject.m in Sources */,
 				8539D3271B9BD3F000D14FB7 /* BufferConst.m in Sources */,
 				8539D3241B9BD38F00D14FB7 /* DecodeObject.m in Sources */,
 				8539D33C1B9BEB9100D14FB7 /* ReceivedDataStatusQueue.m in Sources */,
 				8564DAF01B9C19B300AEB52D /* ArgObject.m in Sources */,
 				8539D3211B9BD36400D14FB7 /* PackageHeader.m in Sources */,
-				851D41361D373CB70062B387 /* ResponseObject.m in Sources */,
 				8539D3441B9BEFC900D14FB7 /* SendDataQueue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

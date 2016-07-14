@@ -1,15 +1,15 @@
 //
-//  ResponseObject.m
+//  DataObject.m
 //  iosSocketDemo
 //
 //  Created by mmc on 16/7/14.
 //  Copyright © 2016年 mmc. All rights reserved.
 //
 
-#import "ResponseObject.h"
+#import "DataObject.h"
 
-@implementation ResponseObject
+@implementation DataObject
 
-@synthesize cmd, response;
+@synthesize data, length;
 
 @end

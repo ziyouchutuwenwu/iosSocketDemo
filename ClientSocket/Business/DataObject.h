@@ -1,5 +1,5 @@
 //
-//  ResponseObject.h
+//  DataObject.h
 //  iosSocketDemo
 //
 //  Created by mmc on 16/7/14.
@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ResponseObject : NSObject
+@interface DataObject : NSObject
 
-@property (nonatomic, assign ) short cmd;
-@property (nonatomic, assign ) NSString* response;
+@property (nonatomic, strong) NSMutableData* data;
+@property (nonatomic, assign) int length;
 
 @end

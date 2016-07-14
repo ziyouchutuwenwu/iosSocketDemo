@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "AsyncSocket.h"
 
-@interface ViewController : UIViewController<ISocketStatus,ISocketResponse>
+@interface ViewController : UIViewController<ISocketDelegate>
 {
     AsyncSocket*    _socket;
 }

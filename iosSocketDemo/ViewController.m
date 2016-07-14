@@ -7,7 +7,6 @@
 //
 
 #import "ViewController.h"
-#import "ResponseObject.h"
 
 @interface ViewController ()
 
@@ -23,8 +22,7 @@
 
     _socket = [AsyncSocket shareInstance];
     [_socket setPackageMaxSize:10000];
-    [_socket setStatusDelegate:self];
-    [_socket addToResponseDelegates:self];
+    _socket.delegate = self;
 }
 
 - (IBAction) clearButtonTapped:(id)sender
@@ -42,55 +40,28 @@
     [_socket send:1234 dataInfo:@"i am ios"];
 }
 
-#pragma mark @protocol ISocketStatus <NSObject>
+#pragma mark @protocol ISocketDelegate <NSObject>
 - (void) onConnectSuccess
-{
-    [self performSelectorOnMainThread:@selector(onUIConnectSuccess) withObject:nil waitUntilDone:YES];
-}
-
-- (void) onConnectFail
-{
-    [self performSelectorOnMainThread:@selector(onUIConnectFail) withObject:nil waitUntilDone:YES];
-}
-
-- (void) onDisconnect
-{
-    [self performSelectorOnMainThread:@selector(onUIDisconnect) withObject:nil waitUntilDone:YES];
-}
-
-#pragma mark @protocol ISocketResponse <NSObject>
-- (void) onReceiveData:(short)cmd response:(NSString*)response
-{
-    ResponseObject* responseObject = [[ResponseObject alloc] init];
-    responseObject.cmd = cmd;
-    responseObject.response = response;
-    [self performSelectorOnMainThread:@selector(onUIReceiveData:) withObject:responseObject waitUntilDone:YES];
-}
-
-#pragma mark UI更新
-- (void) onUIConnectSuccess
 {
     self.infoLabel.text = @"连接成功";
 }
 
-- (void) onUIConnectFail
+- (void) onConnectFail
 {
     self.infoLabel.text = @"连接失败";
 }
 
-- (void) onUIDisconnect
+- (void) onDisconnect
 {
     self.infoLabel.text = @"断开连接";
 }
 
-- (void) onUIReceiveData:(ResponseObject*)responseObject
+- (void) onReceiveData:(short)cmd response:(NSString*)response
 {
-    short cmd = responseObject.cmd;
-    NSString* response = responseObject.response;
-    
     NSString* oldText = self.infoLabel.text;
     NSString* info = [NSString stringWithFormat:@"cmd为%d, 信息为%@",cmd, response];
     self.infoLabel.text = [NSString stringWithFormat:@"%@\r\n%@", oldText, info];
+
 }
 
 @end

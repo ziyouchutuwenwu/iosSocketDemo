@@ -1,5 +1,5 @@
 //
-//  ISocketResponse.h
+//  ISocketStatus.h
 //  iosSocketDemo
 //
 //  Created by mmc on 15/9/6.
@@ -8,8 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol ISocketResponse <NSObject>
+@protocol ISocketDelegate <NSObject>
 
+- (void) onConnectSuccess;
+- (void) onConnectFail;
+- (void) onDisconnect;
 - (void) onReceiveData:(short)cmd response:(NSString*)response;
 
 @end
