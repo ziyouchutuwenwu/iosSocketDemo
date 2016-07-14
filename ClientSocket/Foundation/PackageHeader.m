@@ -16,7 +16,7 @@ static const int HEADER_SIZE_4 = 4;
 
 + (int) size
 {
-    return HEADER_SIZE_4;
+    return HEADER_SIZE_2;
 }
 
 + (NSMutableData*) setDataSizeBytes:(NSInteger)dataSize

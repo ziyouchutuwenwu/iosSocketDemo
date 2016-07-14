@@ -12,7 +12,19 @@
 
 @end
 
+@interface ResponseObject : NSObject
+
+@property (nonatomic, assign ) short cmd;
+@property (nonatomic, assign ) NSString* response;
+
+@end
+
+@implementation ResponseObject
+@synthesize cmd, response;
+@end
+
 @implementation ViewController
+@synthesize infoLabel;
 
 - (void)viewDidLoad
 {
@@ -37,23 +49,50 @@
 #pragma mark @protocol ISocketStatus <NSObject>
 - (void) onConnectSuccess
 {
-    NSLog(@"连接成功");
+    [self performSelectorOnMainThread:@selector(onUIConnectSuccess) withObject:nil waitUntilDone:YES];
 }
 
 - (void) onConnectFail
 {
-    NSLog(@"连接失败");
+    [self performSelectorOnMainThread:@selector(onUIConnectFail) withObject:nil waitUntilDone:YES];
 }
 
 - (void) onDisconnect
 {
-    NSLog(@"断开连接");
+    [self performSelectorOnMainThread:@selector(onUIDisconnect) withObject:nil waitUntilDone:YES];
 }
 
 #pragma mark @protocol ISocketResponse <NSObject>
 - (void) onReceiveData:(short)cmd response:(NSString*)response
 {
-    NSLog(@"收到数据%d, %@",cmd,response);
+    ResponseObject* responseObject = [[ResponseObject alloc] init];
+    responseObject.cmd = cmd;
+    responseObject.response = response;
+    [self performSelectorOnMainThread:@selector(onUIReceiveData:) withObject:responseObject waitUntilDone:YES];
+}
+
+#pragma mark UI更新
+- (void) onUIConnectSuccess
+{
+    infoLabel.text = @"连接成功";
+}
+
+- (void) onUIConnectFail
+{
+    infoLabel.text = @"连接失败";
+}
+
+- (void) onUIDisconnect
+{
+    infoLabel.text = @"断开连接";
+}
+
+- (void) onUIReceiveData:(ResponseObject*)responseObject
+{
+    short cmd = responseObject.cmd;
+    NSString* response = responseObject.response;
+    
+    infoLabel.text = [NSString stringWithFormat:@"cmd为%d, 信息为%@",cmd, response];
 }
 
 @end

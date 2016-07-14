@@ -14,6 +14,8 @@
     AsyncSocket*    _socket;
 }
 
+@property (nonatomic, strong ) IBOutlet UILabel* infoLabel;
+
 - (IBAction) connectButtonTapped:(id)sender;
 - (IBAction) sendButtonTapped:(id)sender;
 
