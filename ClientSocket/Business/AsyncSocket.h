@@ -27,7 +27,7 @@
 - (void) disConnect;
 - (bool) isConnected;
 - (void) startSendLoop;
-- (void) send:(short)cmd dataInfo:(NSString*)dataInfo;
+- (void) send:(NSMutableData*)data;
 
 - (void) setPackageMaxSize:(int)packageMaxSize;
 

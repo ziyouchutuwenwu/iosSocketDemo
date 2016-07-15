@@ -11,8 +11,10 @@
 
 @implementation GenCodec
 
-+ (NSMutableData*) encode:(short)cmd data:(NSMutableData*)data
++ (NSMutableData*) encode:(short)cmd data:(NSString*)dataInfo
 {
+    NSMutableData* data = [NSMutableData dataWithData:[dataInfo dataUsingEncoding:NSUTF8StringEncoding]];
+    
     NSMutableData* dataBytes = [NSMutableData dataWithCapacity:0];
     [dataBytes appendData:[BytesConverter shortToData:htons(cmd)]];
     [dataBytes appendData:data];
@@ -20,12 +22,15 @@
     return dataBytes;
 }
 
-+ (DecodeObject*) decode:(NSMutableData*)fullData fullDataLen:(int)fullDataLen
++ (DecodeObject*) decode:(NSMutableData*)fullData
 {
     DecodeObject* object = [[DecodeObject alloc] init];
     
+    NSMutableData* dataBytes = [NSMutableData dataWithBytes:([fullData bytes] + 2) length:fullData.length -2];
+    NSString* response = [[NSString alloc] initWithData:dataBytes encoding:NSUTF8StringEncoding];
+    
     object.cmd = ntohs([BytesConverter dataToShort:fullData]);
-    object.dataBytes = [NSMutableData dataWithBytes:([fullData bytes] + 2) length:fullDataLen -2];
+    object.dataInfo = response;
     
     return object;
 }

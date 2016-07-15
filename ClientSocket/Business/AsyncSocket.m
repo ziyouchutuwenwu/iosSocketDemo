@@ -11,7 +11,6 @@
 #import "SendDataQueue.h"
 #import "GenCodec.h"
 #import "ArgObject.h"
-#import "DataObject.h"
 
 @interface AsyncSocket(Private)
 - (void) asyncConnect:(ArgObject*)object;
@@ -72,14 +71,11 @@ static AsyncSocket* _instance = nil;
     [NSThread detachNewThreadSelector:@selector(loopSend) toTarget:self withObject:nil];
 }
 
-- (void) send:(short)cmd dataInfo:(NSString*)dataInfo
+- (void) send:(NSMutableData*)data
 {
     if (!_shouldSendExit)
     {
-        NSMutableData* data = [NSMutableData dataWithData:[dataInfo dataUsingEncoding:NSUTF8StringEncoding]];
-        NSMutableData* sendBytes = [GenCodec encode:cmd data:data];
-        
-        [[SendDataQueue shareInstance] addDataBytes:sendBytes];
+        [[SendDataQueue shareInstance] addDataBytes:data];
     }
 }
 
@@ -143,13 +139,9 @@ static AsyncSocket* _instance = nil;
     [[SendDataQueue shareInstance] clear];
 }
 
-- (void) onReceiveData:(NSMutableData*)data length:(int)length
+- (void) onReceiveData:(NSMutableData*)data
 {
-    DataObject* dataObject = [[DataObject alloc] init];
-    dataObject.data = [NSMutableData dataWithData:data];
-    dataObject.length = length;
-    
-    [self performSelectorOnMainThread:@selector(onUIReceiveData:) withObject:dataObject waitUntilDone:YES];
+    [self performSelectorOnMainThread:@selector(onUIReceiveData:) withObject:data waitUntilDone:YES];
 }
 
 - (void) onSendSuccess:(NSMutableData*)data
@@ -188,14 +180,11 @@ static AsyncSocket* _instance = nil;
     }
 }
 
-- (void) onUIReceiveData:(DataObject*)dataObject
-{
-    DecodeObject* object = [GenCodec decode:dataObject.data fullDataLen:dataObject.length];
-    NSString* response = [[NSString alloc] initWithData:object.dataBytes encoding:NSUTF8StringEncoding];
-    
+- (void) onUIReceiveData:(NSMutableData*)data
+{    
     if ( nil != self.delegate)
     {
-        [self.delegate onReceiveData:object.cmd response:response];
+        [self.delegate onReceiveData:data];
     }
 }
 

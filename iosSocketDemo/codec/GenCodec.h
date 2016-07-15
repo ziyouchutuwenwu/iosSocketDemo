@@ -11,7 +11,7 @@
 
 @interface GenCodec : NSObject
 
-+ (NSMutableData*) encode:(short)cmd data:(NSMutableData*)data;
-+ (DecodeObject*) decode:(NSMutableData*)fullData fullDataLen:(int)fullDataLen;
++ (NSMutableData*) encode:(short)cmd data:(NSString*)dataInfo;
++ (DecodeObject*) decode:(NSMutableData*)fullData;
 
 @end

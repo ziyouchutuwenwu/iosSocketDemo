@@ -137,7 +137,7 @@
             //完整数据包readBufferWithSavedBytes + loopBufferPos，给上层的时候，需要去掉4字节包头长度
             NSMutableData* completeData = [NSMutableData dataWithCapacity:0];
             [completeData replaceBytesInRange:NSMakeRange(0, completeData.length) withBytes:([totalBytes bytes] + loopBufferPos + [PackageHeader size]) length:headerDataLen];
-            if ( nil != self.callBack) [self.callBack onReceiveData:completeData length:(int)completeData.length];
+            if ( nil != self.callBack) [self.callBack onReceiveData:completeData];
             
             loopBufferPos += headerDataLen + [PackageHeader size];
         }

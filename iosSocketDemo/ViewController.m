@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "GenCodec.h"
 
 @interface ViewController ()
 
@@ -37,7 +38,8 @@
 
 - (IBAction) sendButtonTapped:(id)sender
 {
-    [_socket send:1234 dataInfo:@"i am ios"];
+    NSMutableData* dataBytes = [GenCodec encode:1234 data:@"i am ios"];
+    [_socket send:dataBytes];
 }
 
 #pragma mark @protocol ISocketDelegate <NSObject>
@@ -56,12 +58,13 @@
     self.infoLabel.text = @"断开连接";
 }
 
-- (void) onReceiveData:(short)cmd response:(NSString*)response
+- (void) onReceiveData:(NSMutableData*)responseData
 {
-    NSString* oldText = self.infoLabel.text;
-    NSString* info = [NSString stringWithFormat:@"cmd为%d, 信息为%@",cmd, response];
-    self.infoLabel.text = [NSString stringWithFormat:@"%@\r\n%@", oldText, info];
+    DecodeObject* object = [GenCodec decode:responseData];
 
+    NSString* oldText = self.infoLabel.text;
+    NSString* info = [NSString stringWithFormat:@"cmd为%d, 信息为%@",object.cmd, object.dataInfo];
+    self.infoLabel.text = [NSString stringWithFormat:@"%@\r\n%@", oldText, info];
 }
 
 @end

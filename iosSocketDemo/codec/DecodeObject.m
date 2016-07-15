@@ -11,6 +11,6 @@
 @implementation DecodeObject
 
 @synthesize cmd;
-@synthesize dataBytes;
+@synthesize dataInfo;
 
 @end

@@ -11,6 +11,6 @@
 @interface DecodeObject : NSObject
 
 @property (nonatomic, assign) short          cmd;
-@property (nonatomic, copy  ) NSMutableData* dataBytes;
+@property (nonatomic, copy  ) NSString* dataInfo;
 
 @end

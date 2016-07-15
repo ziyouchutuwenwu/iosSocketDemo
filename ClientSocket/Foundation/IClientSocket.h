@@ -14,7 +14,7 @@
 - (void) onConnectFail;
 - (void) onDisconnect;
 
-- (void) onReceiveData:(NSMutableData*)data length:(int)length;
+- (void) onReceiveData:(NSMutableData*)data;
 
 - (void) onSendSuccess:(NSMutableData*)data;
 - (void) onSendFail:(NSMutableData*)data;

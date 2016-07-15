@@ -13,6 +13,6 @@
 - (void) onConnectSuccess;
 - (void) onConnectFail;
 - (void) onDisconnect;
-- (void) onReceiveData:(short)cmd response:(NSString*)response;
+- (void) onReceiveData:(NSMutableData*)responseData;
 
 @end
